@@ -1,11 +1,9 @@
 import json
 
 def handler(event, context):
-    body = event["body-json"]
-    client = body["client"]
-    result = f"Hello, {client}"
+    print(event)
 
     return {
         'statusCode': 200,
-        'body': json.dumps(result)
+        'body': json.dumps(evnet)
     }
