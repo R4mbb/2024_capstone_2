@@ -3,6 +3,7 @@ from src.predict import Lamb
 import boto3
 import os
 import requests
+import shutil
 
 '''
 filename1 = '00280532F4625A5B21B74B29A47C010D9629F875'
@@ -34,6 +35,7 @@ def s3_download_file():
 
 def handler(event, context):
     #file = s3_download_file()
+    shutil.rmtree('tmp/extracted/')
     pred = Lamb()
     result = pred.predict(filename3)
 
