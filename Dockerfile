@@ -1,6 +1,6 @@
-FROM amazon/aws-lambda-python:3.8
+FROM public.ecr.aws/lambda/python:3.12
 
-RUN /var/lang/bin/python3.8 -m pip install --upgrade pip
+RUN /var/lang/bin/python3.12 -m pip install --upgrade pip
 
 RUN yum install git -y
 
