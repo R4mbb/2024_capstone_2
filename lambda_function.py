@@ -2,6 +2,7 @@ import json
 from src.predict import Lamb
 import boto3
 import os
+import requests
 
 '''
 filename1 = '00280532F4625A5B21B74B29A47C010D9629F875'
@@ -36,7 +37,11 @@ def handler(event, context):
     pred = Lamb()
     result = pred.predict(filename3)
 
-    print(result)
+    url = "[web_ip]/recieve_result"
+    data = result
+    res = requests.post(url, json=data)
+    
+    print(result, res.status_code)
     #return result
 
 
