@@ -35,16 +35,21 @@ def s3_download_file():
 
 def handler(event, context):
     #file = s3_download_file()
-    shutil.rmtree('tmp/extracted/')
+    file = 'soft.zip'
+    if os.path.exists('tmp/extracted'):
+        shutil.rmtree('tmp/extracted/')
+        
     pred = Lamb()
-    result = pred.predict(filename3)
+    result = pred.predict(file)
 
+    if 'success' in result:
+        result['success'] = {k: float(v) for k, v in result['success'].items()}
+    
     url = "[web_ip]/recieve_result"
     data = result
     res = requests.post(url, json=data)
     
     print(result, res.status_code)
     #return result
-
 
 handler(1, 1)
