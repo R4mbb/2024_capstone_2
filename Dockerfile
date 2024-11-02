@@ -8,6 +8,6 @@ RUN git clone https://github.com/jinsu9758/lambda_docker_test.git
 
 RUN pip install -r lambda_docker_test/requirements.txt
 
-COPY lambda_docker_test/ /var/task
+WORKDIR lambda_docker_test/
 
 CMD ["lambda_function.handler"]
