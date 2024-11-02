@@ -10,7 +10,7 @@ class Lamb():
     def __init__(self):
         self.model_path = 'model/'
         self.model_name = 'test_case_1_sd_1.model'
-        self.file_path = 'tmp/check/'
+        self.file_path = '/tmp/check/'
         self.first_n_byte = 2000000
         self.window_size = 500
         
