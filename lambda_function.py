@@ -5,13 +5,7 @@ import os
 import requests
 import shutil
 
-'''
-filename1 = '00280532F4625A5B21B74B29A47C010D9629F875'
-filename2 = '0014D73E9987A3FC3DA1055D912286B95929DC6D'
-filename3 = 'soft.zip'
-'''
 
-'''
 #역할부여 해야함.
 def s3_download_file():
     s3 = boto3.client('s3')
@@ -29,13 +23,11 @@ def s3_download_file():
         # 다운로드 완료 메시지
         print(f"Downloaded {file_key} to {download_path}")
     return file_key
-'''
 
 
 
 def handler(event, context):
-    #file = s3_download_file()
-    file = 'soft.zip'
+    file = s3_download_file()
     if os.path.exists('tmp/extracted'):
         shutil.rmtree('tmp/extracted/')
         
@@ -45,11 +37,15 @@ def handler(event, context):
     if 'success' in result:
         result['success'] = {k: float(v) for k, v in result['success'].items()}
     
-    url = "[web_ip]/recieve_result"
+    url = "http://15.165.218.60/developer_page/recieve_result"
     data = result
     res = requests.post(url, json=data)
     
     print(result, res.status_code)
-    #return result
 
-handler(1, 1)
+    if os.path.exists('tmp/check'):
+        shutil.rmtree('tmp/check')
+        os.makedirs('tmp/check')
+
+
+
