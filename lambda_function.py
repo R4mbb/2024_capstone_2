@@ -11,6 +11,9 @@ def s3_download_file():
     s3 = boto3.client('s3')
     bucket_name = 'pre-upload-amoin-bucket'
 
+    if not os.path.exists('tmp/check'):
+        os.makedirs('tmp/check')
+
     response = s3.list_objects_v2(Bucket=bucket_name)
 
     for obj in response['Contents']:
