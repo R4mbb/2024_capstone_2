@@ -46,7 +46,7 @@ class Lamb():
                 self.result['fail'].append(file_name)
                 return
 
-    def extract_check_header(self, zipname, extract_to="tmp/extracted/"):
+    def extract_check_header(self, zipname, extract_to="/tmp/extracted/"):
         with zipfile.ZipFile(zipname, 'r') as zip_ref:
             if not os.path.exists(extract_to):
                 os.mkdir(extract_to)
