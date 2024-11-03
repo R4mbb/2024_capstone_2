@@ -40,7 +40,7 @@ def handler(event, context):
     if 'success' in result:
         result['success'] = {k: float(v) for k, v in result['success'].items()}
     
-    url = "http://15.165.218.60/developer_page/recieve_result"
+    url = "http://15.165.218.60:8000/developer_page/recieve_result"
     data = result
     res = requests.post(url, json=data)
     
