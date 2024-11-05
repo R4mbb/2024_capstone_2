@@ -15,6 +15,7 @@ class Lamb():
         self.window_size = 500
         
         self.filenames = []
+        self.path_filename = []
 
         self.result = {}
         self.result['success'] = {}
@@ -34,16 +35,17 @@ class Lamb():
 
         return np.array(tmp)
 
-    def check_header(self, filename):
+    def check_header(self, filename, num):
         with open(filename, 'rb') as f:
             header = f.read(4)
 
             if b'MZ' in header:
                 self.filenames.append(filename)
             else:            
-                file_name = filename.split('/')
-                file_name = file_name[len(file_name)-1]
-                self.result['fail'].append(file_name)
+                file_name1 = filename.split('/')
+                file_name1 = file_name1[len(file_name1)-1]
+                if file_name1 in self.path_filename[num]:
+                    self.result['fail'].append(self.path_filename[num])
                 return
 
     def extract_check_header(self, zipname, extract_to="/tmp/extracted/"):
@@ -51,12 +53,13 @@ class Lamb():
             if not os.path.exists(extract_to):
                 os.mkdir(extract_to)
 
-            for file_name in zip_ref.namelist():
+            for num, file_name in enumerate(zip_ref.namelist()):
                 zip_ref.extract(file_name, path=extract_to)
 
                 extracted_file_path = os.path.join(extract_to, file_name)
+                self.path_filename = file_name
                 if not os.path.isdir(extracted_file_path):
-                    self.check_header(extracted_file_path)
+                    self.check_header(extracted_file_path, num)
 
     def predict(self, filename):
         if '.zip' in filename:
@@ -68,7 +71,7 @@ class Lamb():
         model = torch.load(self.model_path+self.model_name, map_location=torch.device('cpu'), weights_only=False)
         model.eval()
 
-        for file in self.filenames:
+        for num, file in enumerate(self.filenames):
             input_data = self.exe_data(file)
             input_data = torch.tensor(input_data)
 
@@ -77,9 +80,10 @@ class Lamb():
 
             result = list(self.sigmoid(pred).cpu().numpy())
 
-            file_name = file.split('/')
-            file_name = file_name[len(file_name)-1]
-
-            self.result['success'][file_name] = result[0][0]
+            file_name1 = file.split('/')
+            file_name1 = file_name1[len(file_name1)-1]
+            if file_name1 in self.path_filename[num]:
+                self.result['success'][self.path_filename] = result[0][0]
 
         return self.result
+
