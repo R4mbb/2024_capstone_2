@@ -8,7 +8,9 @@ lambda_docker_test 레포지토리에서는 학습시킨 AI 모델을 AWS 서비
 ![aws 아키텍쳐 수정본 배경 흰색](https://github.com/user-attachments/assets/f0b2e589-ebf8-47ce-83a4-cb14d3855006)
 
 ### EC2 생성
-EC2 인스턴스를 생성합니다. (저희 팀은 t2.xlarge 사용)
+EC2 인스턴스를 생성합니다. (저희 팀은 t2.xlarge 사용)  
+보안그룹(인바운드) - 8000포트 허용  
+보안그룹(아웃바운드)- 모두 허용
 
 ### S3 버킷 생성
 서로 다른 2개의 버킷을 생성합니다. (권한 : 모든 퍼블릭 차단)
