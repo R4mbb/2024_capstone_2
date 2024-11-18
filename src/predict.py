@@ -68,7 +68,7 @@ class Lamb():
         if '.zip' in filename:
             self.extract_check_header(self.file_path+filename)
         else:
-            self.path_filenames.append(object: filename)
+            self.path_filenames.append(filename)
             self.check_header(self.file_path+filename)
 
 
