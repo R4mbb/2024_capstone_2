@@ -9,7 +9,7 @@ from .model import MalConv
 class Lamb():
     def __init__(self):
         self.model_path = 'model/'
-        self.model_name = 'test_case_1_sd_8.model'
+        self.model_name = 'test_case_1_sd_1.model'
         self.file_path = '/tmp/check/'
         self.first_n_byte = 2000000
         self.window_size = 500
@@ -39,6 +39,7 @@ class Lamb():
     def check_header(self, filename, num=0):
         with open(filename, 'rb') as f:
             header = f.read(4)
+            print(self.path_filenames)
             
 
             if b'MZ' in header:
@@ -68,10 +69,11 @@ class Lamb():
         if '.zip' in filename:
             self.extract_check_header(self.file_path+filename)
         else:
+            self.path_filenames.append(filename)
             self.check_header(self.file_path+filename)
 
 
-        model = torch.load(self.model_path+self.model_name, map_location=torch.device('cpu'), weights_only=False)
+        model = torch.load(self.model_path+self.model_name, map_location=torch.device('cpu'))
         model.eval()
 
         for num, file in enumerate(self.filenames):
